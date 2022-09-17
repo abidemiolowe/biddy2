@@ -22,13 +22,21 @@
 		<spring.version>5.1.2.RELEASE</spring.version>
 		<junit.version>4.11</junit.version>
 		<log4j.version>1.2.17</log4j.version>
-		<sonar.host.url>http:3.22.166.76:9000/</sonar.host.url>
-		<sonar.login>admin</sonar.login>
-		<sonar.password>admin</sonar.password>
+		<sonar.host.url>http:172.31.29.246:9000/</sonar.host.url>
+		<sonar.login>ea97ec312c40c191b6ba998360d78f39b6ad4824</sonar.login>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 	</properties>
 
+    <repositories>
+    <repository>
+    <id>nexus</id>
+    <name>nexus proxy Repo</name>
+    <url>http://13.52.186.249:8081/repository/tesla2-proxy/</url>
+    </repository>
+    </repositories>
+
+	
 	<dependencies>
 		
 		<dependency>
@@ -96,13 +104,13 @@
 	    <repository>
 	      <id>nexus</id>
 	      <name>Landmark Technologies Releases Nexus Repository</name>
-	      <url>http://100.26.133.141:8081/repository/paypal-releases/</url>
+	      <url>http://13.52.186.249:8081/repository/tesla2-proxy/</url>
 	    </repository>
 	    
 	    <snapshotRepository>
 	      <id>nexus</id>
 	      <name>Landmark Technologies Snapshot Nexus Repository </name>
-	      <url>http://18.118.29.219:8081/repository/paypal-snapshots/</url>
+	      <url>http://13.52.186.249:8081/repository/tesla2-snapshots/</url>
 	    </snapshotRepository>
 	    
 	</distributionManagement>
