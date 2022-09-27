@@ -1,0 +1,36 @@
+node{
+  def mavenHome = tool name: 'Maven3'    
+  stage('1cloneCode'){
+    git "https://github.com/abidemiolowe/biddy2"
+  }
+  stage('2Test&Build'){
+    sh "${mavenHome}/bin/mvn clean package"
+    //bat "${mavenHome}/bin/mvn clean package"
+  }
+  stage('3codeQuality'){
+    sh "${mavenHome}/bin/mvn sonar:sonar"
+  }
+  stage('4uploadArtifacts'){
+    sh "${mavenHome}/bin/mvn deploy"
+  }
+  stage('5deploy2UAT'){
+  sh "echo 'deploy to UAT'  "
+  deploy adapters: [tomcat9(credentialsId: '60af2f5c-cdfc-4a58-928f-d0654a045bfb', path: '', url: 'http://3.101.119.188:8080/')], contextPath: null, war: 'target/*war'
+  }
+  stage('6approvalGate'){
+  sh "echo 'ready for review' "
+  timeout(time:5, unit:'DAYS') {
+  input message: 'Application ready for deployment, Please review and approve'
+  }
+  stage('7deploy2Prod'){
+  deploy adapters: [tomcat9(credentialsId: 'tomcat-credentials', path: '', url: 'http://3.101.119.188:8080/')], contextPath: null, war: 'target/*war'  
+  }
+  stage('8emailNotification'){
+   emailext body: '''Hi All,
+
+Check Build Status.
+
+Abidemi Olowe''', recipientProviders: [buildUser(), developers(), upstreamDevelopers(), brokenBuildSuspects(), brokenTestsSuspects(), contributor()], subject: 'build status', to: 'abidemiolowe.22@gmail.com'  
+  }
+}
+}
