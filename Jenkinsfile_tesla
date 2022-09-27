@@ -1,5 +1,5 @@
 node{
-  def mavenHome = tool name: 'Maven3.8.6'    
+  def mavenHome = tool name: 'Maven3'    
   stage('1cloneCode'){
     git "https://github.com/abidemiolowe/biddy2"
   }
